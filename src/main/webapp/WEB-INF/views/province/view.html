@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>View Province</title>
+</head>
+<body>
+
+<h1>View Province</h1>
+<b><h3  th:text=" 'List customer in ' + ${province.name}"></h3></b>
+<form>
+    <table border="1">
+        <tr>
+            <td>First Name</td>
+            <td>Last Name</td>
+        </tr>
+        <tr th:each="cus : ${customers}">
+            <td th:text="${cus.firstName}"></td>
+            <td th:text="${cus.lastName}"></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
