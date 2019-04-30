@@ -5,11 +5,13 @@ import com.codegym.cms.model.Province;
 import com.codegym.cms.service.CustomerService;
 import com.codegym.cms.service.ProvinceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class controllerCustomer {
@@ -21,8 +23,13 @@ public class controllerCustomer {
     private ProvinceService provinceService;
 
     @GetMapping("/customers")
-   public ModelAndView listCustomer(){
-        Iterable<Customer> customers = customerService.findAll();
+   public ModelAndView listCustomer(Pageable pageable, @RequestParam Optional<String> s){
+        Page<Customer> customers;
+        if(s.isPresent()){
+            customers = customerService.findAllByFirstNameContaining(s.get(),pageable);
+        }else {
+            customers = customerService.findAll(pageable);
+        }
         ModelAndView modelAndView = new ModelAndView("customer/list");
         modelAndView.addObject("customers",customers);
         return modelAndView;

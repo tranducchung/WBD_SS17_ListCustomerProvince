@@ -6,9 +6,13 @@
 </head>
 <body>
 <a th:href="@{/create-customer}">Create new Customer</a><br>
-
 <a th:href="@{/provinces}" style=" color: gold" >Go to list Province </a>
 <h1>Customers</h1>
+<form>
+    <p>Search by first name</p>
+    <input name="s" type="text">
+    <input type="submit" value="Search">
+</form>
 <table border="1">
     <tr>
         <td>First Name</td>
@@ -27,5 +31,10 @@
         </tr>
     </th:block>
 </table>
+<div>
+    <a th:href="@{'customers'(page=${customers.number-1})}" th:if="${customers.hasPrevious()}">Previous</a>
+    <span th:text="${customers.number+1}"></span>/<span th:text="${customers.totalPages}"></span>
+    <a th:href="@{'customers'(page=${customers.number+1})}" th:if="${customers.hasNext()}">Next</a>
+</div>
 </body>
 </html>
